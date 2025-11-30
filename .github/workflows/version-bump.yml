@@ -127,28 +127,31 @@ jobs:
         NEW_VERSION="${{ steps.version.outputs.new_version }}"
         sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$NEW_VERSION\"/" package.json
 
-    - name: Commit version bump
+    - name: Create version bump branch and PR
+      if: steps.version.outputs.should_release == 'true'
+      id: pr
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: chore/version-bump-${{ steps.version.outputs.new_version }}
+        title: "chore: bump version to ${{ steps.version.outputs.new_version }}"
+        body: |
+          Automated version bump to ${{ steps.version.outputs.new_version }}
+          
+          This PR was created automatically by the version-bump workflow.
+          
+          **Note:** After merging this PR, the release workflow will automatically build and publish packages.
+          
+          <!-- VERSION_BUMP: ${{ steps.version.outputs.new_version }} -->
+        commit-message: "chore: bump version to ${{ steps.version.outputs.new_version }}"
+        labels: |
+          automated
+          version-bump
+        delete-branch: true
+
+    - name: Output PR info
       if: steps.version.outputs.should_release == 'true'
       run: |
-        NEW_VERSION="${{ steps.version.outputs.new_version }}"
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add package.json
-        git commit -m "chore: bump version to $NEW_VERSION"
-        git push
-
-    - name: Create git tag
-      if: steps.version.outputs.should_release == 'true'
-      run: |
-        NEW_VERSION="${{ steps.version.outputs.new_version }}"
-        git tag "v$NEW_VERSION"
-        git push origin "v$NEW_VERSION"
-
-  release:
-    needs: version-bump
-    if: needs.version-bump.outputs.should_release == 'true'
-    permissions:
-      contents: write
-      packages: write
-    uses: ./.github/workflows/npm-publish.yml
-    secrets: inherit
+        echo "PR created: ${{ steps.pr.outputs.pull-request-number }}"
+        echo "New version: ${{ steps.version.outputs.new_version }}"
+        echo "After merging this PR, the release workflow will automatically create a tag and build packages."
