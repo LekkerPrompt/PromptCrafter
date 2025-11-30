@@ -147,5 +147,8 @@ jobs:
   release:
     needs: version-bump
     if: needs.version-bump.outputs.should_release == 'true'
+    permissions:
+      contents: write
+      packages: write
     uses: ./.github/workflows/npm-publish.yml
     secrets: inherit
