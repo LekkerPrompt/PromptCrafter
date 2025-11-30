@@ -29,7 +29,7 @@ Desktop AI prompt studio running 100% locally via **Ollama** and **Gemma 3** mod
 
 - **100% Local & Private** - All processing via Ollama on your machine
 - **8 Tabs** - Work on multiple prompts simultaneously with independent presets and history
-- **Version History** - Track prompt iterations with manual saves (⌘S/Ctrl+S) and visual timeline
+- **Version History** - Track prompt iterations with manual saves and visual timeline
 - **7 Task Types** - General, Coding, Writing, Marketing, Research, Image, Video
 - **Gemma 3 Only** - Supports gemma3:4b, gemma3:12b, gemma3:27b with auto-detection
 - **Preset Studio** - Create reusable configurations with live preview and AI examples
@@ -89,13 +89,11 @@ Download installers: [shadowquill.org](https://shadowquill.org) or [GitHub Relea
 - **Switch Models** - Use vertical selector (4B/12B/27B)
 - **Write & Generate** - Left pane for input, right pane for output
 - **Version History** - Click version indicator (e.g., "v2") to navigate saves
-- **Manual Save** - ⌘S/Ctrl+S to create version snapshot
 
 | Shortcut | Action |
 |----------|--------|
 | ⌘T / Ctrl+T | New tab |
 | ⌘W / Ctrl+W | Close tab |
-| ⌘S / Ctrl+S | Save version |
 | ⌘1-8 / Ctrl+1-8 | Switch tabs |
 
 #### Preset Studio
